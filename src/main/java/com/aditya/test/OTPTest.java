@@ -20,7 +20,7 @@ public class OTPTest {
 			final KeyGenerator keyGenerator = KeyGenerator.getInstance(totp.getAlgorithm());
 
 			// Key length should match the length of the HMAC output
-			// 160 bits for SHA-1, 256 bits for SHA-256, and 512 bits for SHA-512).
+			// 160 bits for SHA-1, 256 bits for SHA-256, and 512 bits for SHA-512
 			keyGenerator.init(160);
 
 			key = keyGenerator.generateKey();
@@ -34,14 +34,15 @@ public class OTPTest {
 		final Instant now = Instant.now();
 		final Instant later = now.plus(totp.getTimeStep());
 
-		System.out.format("Current password: %06d\n", totp.generateOneTimePassword(key, now));
+		System.out.format("Current password (TOTP) : %06d\n", totp.generateOneTimePassword(key, now));
 
-		System.out.format("Future password:  %06d\n", totp.generateOneTimePassword(key, later));
+		System.out.format("Future password (TOTP) :  %06d\n", totp.generateOneTimePassword(key, later));
 
 		// 2. Counter based OTP generation
+		// Hard-coded counter for Demo purpose - will be dynamic in production.
 		int counter = 123456;
 		int counterBasedOTP = totp.generateOneTimePassword(key, counter);
-		System.out.println("OTP : " + counterBasedOTP);
+		System.out.println("HOTP : " + counterBasedOTP);
 
 	}
 
